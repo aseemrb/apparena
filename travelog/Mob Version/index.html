@@ -1,0 +1,64 @@
+<html>
+
+	<head>
+	
+		<title>Travelogue</title>
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<script>
+			$(document).ready(function(){
+				var url = "un.png";
+				var hei = $("#map").innerHeight();
+				var wid = $("#map").innerWidth();
+				$('#map').append("<img src="+url+" style=\"width:"+wid+"px; height:"+hei+"px;\" />");
+				var heigh = $("#map1").innerHeight();
+				var widt = $("#map1").innerWidth();
+				var url = GMaps.staticMapURL({
+					size: [widt, heigh],
+					lat: -12.043333,
+					lng: -77.028333,
+					zoom: 2
+				});
+				$('<img/>').attr('src', url).appendTo('#map1');
+			});
+		</script>
+
+	</head>
+	
+	<body>
+		
+		<div style="float: left; width: 45%; height: 95%; border-right: 2px solid #666666;">
+			<h2 style="color: #08c; text-align: center;">I am Here</h2>
+			<center><div id="map"></div></center><br><br>
+			<center>
+				<textarea id="inp" type="text" placeholder="...Write your experiences about the location here and save it for future reference..."></textarea>
+			</center>
+			<br>
+			<center>
+				<input id="btn" class="sub" type="button" value="Save" onclick="submit()"></input>
+				<input id="btn" class="view" type="button" value="View" onclick="view()"></input>
+			</center>
+		</div>
+		
+		
+		<div style="float: left; width: 45%; height: 95%; margin-left: 5%;">
+			<h1 style="color:#08c;">My Travel History</h1>
+			<center><div id="map1"></div></center><br>
+		</div>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<script src="js/gmap.js" language="javascript" ></script>
+		<script src="js/script.js" language="javascript" ></script>
+		
+	</body>
+	
+</html>

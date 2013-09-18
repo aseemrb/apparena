@@ -1,0 +1,98 @@
+div
+			{
+				color: #225;
+				text-align: left;
+				font-size: 20px;
+				box-shadow: 40px 40px 30px #888888;
+				border:5px solid #336677;
+				padding:20px 40px; 
+				background:#d2d1ff;
+				width: 85%;
+				height: 70%;
+				border-radius:40px;
+				-moz-border-radius:40px;
+			}
+			
+			button
+			{
+				font-size: 15px;
+				font-weight: bold;
+				width: 120px;
+				height: 30px;
+				border: solid 1px #fff;
+				color: #fff;
+				border-radius:15px;
+				-moz-border-radius:15px;
+				
+				-webkit-transition: All 0.5s ease;
+				-moz-transition: All 0.5s ease;
+				-o-transition: All 0.5s ease;
+				-ms-transition: All 0.5s ease;
+				transition: All 0.5s ease;
+				
+				-webkit-box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
+				-moz-box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
+				box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.5);
+				
+				background: -moz-linear-gradient(top, #56a 0%, #459 10%, #348 20%, #237 30%, #126 40%, #015 50%, #004 60%, #003 70%, #003 80%, #003 90%, #003 100%);
+				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#56a), color-stop(10%,#459), color-stop(20%,#348), color-stop(30%,#237), color-stop(40%,#126), color-stop(50%,#015), color-stop(60%,#004), color-stop(70%,#003), color-stop(80%,#002), color-stop(90%,#001), color-stop(100%,#000));
+			}
+			
+			#button1
+			{
+				float: left;
+				<!-- background: #6292c2;
+				margin: 50px 0 0 50px;
+				padding: 0 0 0 7px;
+				overflow: hidden;
+				display: block;
+				font-size: 15px;
+				font-weight: bold;
+				width: 120px;
+				height: 30px;
+				border: solid 1px #fff;
+				color: #fff;
+				border-radius:15px;
+				-moz-border-radius:15px;
+				
+				-webkit-transition: All 0.5s ease;
+				-moz-transition: All 0.5s ease;
+				-o-transition: All 0.5s ease;
+				-ms-transition: All 0.5s ease;
+				transition: All 0.5s ease;
+				
+				-webkit-box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
+				-moz-box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
+				box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.5);
+				
+				background: -moz-linear-gradient(top, #56a 0%, #459 10%, #348 20%, #237 30%, #126 40%, #015 50%, #004 60%, #003 70%, #003 80%, #003 90%, #003 100%);
+				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#56a), color-stop(10%,#459), color-stop(20%,#348), color-stop(30%,#237), color-stop(40%,#126), color-stop(50%,#015), color-stop(60%,#004), color-stop(70%,#003), color-stop(80%,#002), color-stop(90%,#001), color-stop(100%,#000));
+			}
+			
+			#button1:hover 
+			{
+				font-size: 15px;
+				font-weight: bold;
+				width: 120px;
+				height: 30px;
+				border: solid 1px #fff;
+				color: #fff;
+				border-radius:15px;
+				-moz-border-radius:15px;
+				
+				-webkit-transition: All 0.5s ease;
+				-moz-transition: All 0.5s ease;
+				-o-transition: All 0.5s ease;
+				-ms-transition: All 0.5s ease;
+				transition: All 0.5s ease;
+				
+				-webkit-box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
+				-moz-box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
+				box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.5);
+				
+				background: -moz-linear-gradient(top, #000 0%, #111 10%, #222 20%, #333 30%, #444 40%, #555 50%, #666 60%, #777 70%, #888 80%, #999 90%, #aaa 100%);
+				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#000), color-stop(10%,#111), color-stop(20%,#222), color-stop(30%,#333), color-stop(40%,#444), color-stop(50%,#555), color-stop(60%,#666), color-stop(70%,#777), color-stop(80%,#888), color-stop(90%,#999), color-stop(100%,#aaa));
+				
+			}
+			
+			

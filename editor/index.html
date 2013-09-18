@@ -1,0 +1,32 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<script src='js/script.js' type="text/javascript"></script>
+
+	</head>
+	<body>
+		<center>
+			<!-- <a href="#" id="button1" class="buttonText">Bold</a>&nbsp; -->
+			<button id="button1" onclick="document.execCommand('bold',false,null);">Bold</button>&nbsp;
+			<button  onclick="document.execCommand('italic',false,null);">Italic</button>&nbsp;
+			<button  onclick="document.execCommand('underline',false,null);">Underline</button>&nbsp;
+			<button  onclick="document.execCommand('copy',false,null);">Copy</button>&nbsp;
+			<button  onclick="document.execCommand('cut',false,null);">Cut</button>&nbsp;
+			<button  onclick="document.execCommand('paste',true,null);">Paste</button>&nbsp;
+			<button  onclick="document.execCommand('insertunorderedlist',false,null);">List</button>&nbsp;
+			<button  onclick="dobCol()">Highlight</button>
+		</center><br height="1px"/>
+		<center>
+			<button  onclick="dofCol()">Text Color</button>
+			<button  onclick="document.execCommand('text-align: center',true,null);">Center</button>
+			<button  onclick="document.execCommand('text-align: right',true,null);">Right</button>
+			<button  onclick="document.execCommand('text-align: left',true,null);">Left</button>
+			<button  onclick="document.execCommand('text-align: just',true,null);">Justify</button>
+		</center>
+		<center>
+			<div id='editable' contenteditable='true'>
+				Welcome to the text editor. Here you can write anything, and edit it to your heart's content :)
+			</div>
+		</center>
+	</body>	
+</html>

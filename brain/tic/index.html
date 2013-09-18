@@ -1,0 +1,106 @@
+<html>
+		<head>
+		<title>Tic-Tac-Toe Game </title>
+        	<script type="text/javascript">
+				var painted;
+				var content;
+				var winningCombinations;
+				var turn=0; //extra feature of javascript
+				var theCanvas;
+				var c;
+				var cxt;
+				var squaresFilled = 0;
+				var w;
+				var y;
+				winningCombinations = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+				window.onload=function()
+				{
+					painted = new Array();
+					content = new Array();
+					
+					for(var l = 0; l < 9; l++)
+					{
+						painted[l] = false;
+						content[l]='';
+					}
+				}
+				function canvasClick(canvasNumber)
+				{
+					theCanvas = "canvas"+canvasNumber;
+					c = document.getElementById(theCanvas);//return reference of html element
+					cxt = c.getContext("2d");
+					if(painted[canvasNumber-1] == false)
+					{
+						if(turn%2==0)
+						{ //draw x			
+							cxt.beginPath();
+							cxt.moveTo(10,10);
+							cxt.lineTo(50,50);
+							cxt.moveTo(50,10);
+							cxt.lineTo(10,50);
+							cxt.stroke();
+							cxt.closePath();
+							content[canvasNumber-1] = 'X';
+						}
+						else
+						{	//draw o
+							cxt.beginPath();
+							cxt.arc(30,30,20,0,Math.PI*2,true);
+							cxt.stroke();
+							cxt.closePath();
+							content[canvasNumber-1] = 'O';
+						}
+						turn++;
+						painted[canvasNumber-1] = true;
+						squaresFilled++;
+						checkForWinners(content[canvasNumber-1]);
+						// no repeat condition
+						if(squaresFilled==9)
+						{
+							alert("THE GAME IS OVER!");
+							location.reload(true);
+						}
+					}
+					else
+					{
+						alert("That space is already occupied!");	
+					}
+				}
+				function checkForWinners(symbol)
+				{
+					for(var a = 0; a < winningCombinations.length; a++)
+					{
+						if(content[winningCombinations[a][0]]==symbol && content[winningCombinations[a][1]]==symbol && content[winningCombinations[a][2]]==symbol)
+						{
+							alert(symbol+ " WON!");
+							playAgain();
+						}
+					}
+				}
+				function playAgain()
+				{
+					y=confirm("Want to Play again..?");
+					if(y==true)
+					{
+						location.reload(true);
+					}
+				}
+
+			</script>
+			
+		</head>
+		<body>
+			<div align="center">
+				<h2>Simple Game</h2><h3> TIC - TAC - TOE!</h3>
+				<canvas id="canvas1" width="60" height="60" style="border:1px solid black" onclick="canvasClick(1)"></canvas>
+				<canvas id="canvas2" width="60" height="60" style="border:1px solid black" onclick="canvasClick(2)"></canvas>
+				<canvas id="canvas3" width="60" height="60" style="border:1px solid black" onclick="canvasClick(3)"></canvas><br>
+				<canvas id="canvas4" width="60" height="60" style="border:1px solid black" onclick="canvasClick(4)"></canvas>
+				<canvas id="canvas5" width="60" height="60" style="border:1px solid black" onclick="canvasClick(5)"></canvas>
+				<canvas id="canvas6" width="60" height="60" style="border:1px solid black" onclick="canvasClick(6)"></canvas><br>
+				<canvas id="canvas7" width="60" height="60" style="border:1px solid black" onclick="canvasClick(7)"></canvas>
+				<canvas id="canvas8" width="60" height="60" style="border:1px solid black" onclick="canvasClick(8)"></canvas>
+				<canvas id="canvas9" width="60" height="60" style="border:1px solid black" onclick="canvasClick(9)"></canvas>
+			</div>
+		</body>
+</html>

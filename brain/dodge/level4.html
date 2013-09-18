@@ -1,0 +1,153 @@
+<html>
+		<head>
+        	<script src="js/jquery.js"></script>
+			<script src="js/keys1.js"></script>
+			<script src="js/keys2.js"></script>
+			<link rel="stylesheet" type="text/css" href="css/style.css" />
+		</head>
+		<body>
+			<script>
+				var score=0;
+				var player=
+				{
+					color: "#00A",
+					x: 400,
+					y: 500,
+					width: 40,
+					height: 40,
+					draw: function() 
+					{
+						canvas.fillStyle = this.color;
+						canvas.fillRect(this.x, this.y, this.width, this.height);
+					}		
+				}
+				var enemy = 
+				{
+					color: "#000",
+					x:480,
+					y:10,
+					width:40,
+					height:40,
+					speed:10,
+					draw:function(){
+						canvas.fillStyle = this.color;
+						canvas.fillRect(this.x, this.y, this.width, this.height);
+					},
+					update:	function()
+					{
+						score++;
+						this.y +=this.speed;
+						if(this.y>=320*2)
+						{
+							this.x=player.x;
+							this.y=10;
+						}
+					}
+				}
+				var enem = {
+					color: "#A00",
+					x:150,
+					y:500,
+					width:40,
+					height:40,
+					speed:10,
+					draw:function(){
+						canvas.fillStyle = this.color;
+						canvas.fillRect(this.x, this.y, this.width, this.height);
+					},
+					update:	function(){
+						score++;
+						this.x += this.speed;
+						if(this.x >= CANVAS_WIDTH-20)
+						{
+							this.y = player.y;
+							this.x=10;
+						}
+					}
+				}
+				
+				var CANVAS_WIDTH = 500*2;
+				var CANVAS_HEIGHT = 280*2;
+				
+				var canvasElement = $("<canvas width='" + CANVAS_WIDTH + "' height='" + CANVAS_HEIGHT + " '' id='canvas'></canvas>");
+				var canvas = canvasElement.get(0).getContext("2d");
+				canvasElement.appendTo('body');
+				var base=0;
+				var FPS = 60;
+				var threading=setInterval(function() {
+					base++;
+					draw();
+					update();
+				}, 1000/FPS)
+
+				function update(){
+					if (keydown.left) {
+						player.x -= 10;
+						if(player.x<=0){
+							player.x=0;
+						}
+					}
+
+					if (keydown.right) {
+						player.x += 10;
+						if(player.x>=CANVAS_WIDTH-40){
+							player.x=CANVAS_WIDTH-40;
+						}
+					}
+					if (keydown.down) {
+						player.y += 10;
+						if(player.y>=510){
+							player.y=510;
+						}
+					}
+
+					if (keydown.up) {
+						player.y -= 10;
+						if(player.y<=50){
+							player.y=50;
+						}
+					}
+					enemy.update();
+					enem.update();
+					if(score==2000)
+						{
+							clearInterval(threading);
+							canvas.font='20pt Calibri';
+							canvas.fillText("Level Complete! Click \"Next\" to advance to Next Level",10,50);
+							document.getElementById("next").innerHTML="&nbsp;Next&nbsp;";
+						}
+					document.getElementById("score").innerHTML=score;
+				}
+
+				function draw(){
+					canvas.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+					if(collision(enemy,player)==true){
+						clearInterval(threading);
+						canvas.font='20pt Calibri';
+						canvas.fillText("Game Over Press F5 ",600,500);
+					}
+					if(collision(enem,player)==true){
+						clearInterval(threading);
+						canvas.font='20pt Calibri';
+						canvas.fillText("Game Over Press F5 ",600,500);
+					}
+					player.draw();
+					enemy.draw();
+					enem.draw();
+				}
+				function collision(a, b) {
+					return a.x < b.x + b.width &&
+					a.x + a.width > b.x &&
+					a.y < b.y + b.height &&
+					a.y + a.height > b.y;
+				}
+				
+			</script>
+			
+			<div id='demo'>
+				<h2>Score:&nbsp; </h2><h2 id="score"></h2>
+			</div><br>
+			<div style="color:#fff; font-size: 20px;"><p>Make 2000 points</p></div>
+			<a id="next" href="level5.html"></a>
+		</body>
+</html>

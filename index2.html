@@ -1,0 +1,309 @@
+<html lang="en">
+<head>
+	<title>Apparena</title>
+	<script type="text/javascript" src="js/script.js"></script>
+	<style>
+		#bottom
+		{
+			position:fixed;
+			bottom:40px;
+			left: 43%;
+		}
+	</style>
+</head>
+
+<body style="margin:0px;" onLoad="init();">
+
+<div>
+	<canvas id="canv" onMouseMove="canv_mousemove(event);" onMouseOut="mx=-1;my=-1;" style="position:absolute;left:0;top:0;">
+		You need a canvas-enabled browser, such as firefox or chrome.
+		<h1 style="font-size:50px; text-align:center;">WELCOME<br> TO<br> APPARENA</h1>
+	</canvas>
+<canvas id="wordCanv" style="width:600px; height:400px; border:1px solid black;display:none;"></canvas>
+<canvas id="wordsTxt"></canvas>
+  
+<script type="text/javascript">
+	
+	var resolutionx=1;
+	var redc=0;
+	var greenc=0;
+	var bluec=0;
+	var wordsc="Apparena Playground";
+	
+	var wordCtx=wordCanv.getContext('2d');
+	var cw=0;
+    var ch=0;
+	
+	function to_run()
+	{
+    //parseInt($('#res').val());
+	//alert($('#res').val());
+    var n=0;
+    var timerRunning=false;
+    var resHalfFloor=0;
+    var resHalfCeil=0;
+	
+	var resolution=resolutionx;
+	var pixels=new Array();
+    var canv=$('canv');
+    var ctx=canv.getContext('2d');
+    var wordCanv=$('wordCanv');
+    var mx=-1;
+    var my=-1;
+    var words="";
+    var txt=new Array();
+    
+	
+    function canv_mousemove(evt)
+    {
+      mx=evt.clientX;//-canv.offsetLeft;
+      my=evt.clientY;//-canv.offsetTop;
+    }
+    
+    function Pixel(homeX,homeY)
+    {
+		this.homeX=homeX;
+		this.homeY=homeY;
+			
+		this.x=Math.random()*cw;
+		this.y=Math.random()*ch;
+		
+		this.xVelocity=Math.random();
+		this.yVelocity=Math.random();
+    }
+    Pixel.prototype.move=function()
+    {
+      var homeDX=this.homeX-this.x;
+      var homeDY=this.homeY-this.y;
+      var homeDistance=Math.sqrt(Math.pow(homeDX,2) + Math.pow(homeDY,2));
+      var homeForce=homeDistance*0.05;
+      var homeAngle=Math.atan2(homeDY,homeDX);
+      
+      var cursorForce=0;
+      var cursorAngle=0;
+      
+      if(mx >= 0)
+      {
+        var cursorDX=this.x-mx;
+        var cursorDY=this.y-my;
+        var cursorDistanceSquared=Math.pow(cursorDX,2) + Math.pow(cursorDY,2);
+        cursorForce=Math.min(10000/cursorDistanceSquared,10000);
+        cursorAngle=Math.atan2(cursorDY,cursorDX);
+      }
+      else
+      {
+        cursorForce=0;
+        cursorAngle=0;
+      }
+      
+      this.xVelocity+=homeForce*Math.cos(homeAngle) + cursorForce*Math.cos(cursorAngle);
+      this.yVelocity+=homeForce*Math.sin(homeAngle) + cursorForce*Math.sin(cursorAngle);
+      
+      this.xVelocity*=0.92;
+      this.yVelocity*=0.92;
+      
+      this.x+=this.xVelocity;
+      this.y+=this.yVelocity;
+    }
+	
+	
+	function body_resize()
+    {
+      cw=document.body.clientWidth;
+      ch=document.body.clientHeight;
+      canv.width=cw;
+      canv.height=ch;
+      wordCanv.width=cw;
+      wordCanv.height=ch;
+      
+      init();
+    }
+	
+	
+	
+	function drawPixels()
+    {
+	  readWords();
+      var imageData=ctx.createImageData(cw,ch);
+
+      var actualData=imageData.data;
+    
+      var index;
+      var goodX;
+      var goodY;
+      var realX;
+      var realY;
+      
+      for(var i=0;i<pixels.length;i++)
+      {
+        goodX=Math.floor(pixels[i].x);
+        goodY=Math.floor(pixels[i].y);
+        
+        for(realX=goodX-resHalfFloor; realX<=goodX+resHalfCeil && realX>=0 && realX<cw;realX++)
+        {
+          for(realY=goodY-resHalfFloor; realY<=goodY+resHalfCeil && realY>=0 && realY<ch;realY++)
+          {
+            index=(realY*imageData.width + realX)*4;
+            words=(wordsc); 
+            actualData[index+0]=redc;
+            actualData[index+1]=greenc;
+            actualData[index+2]=bluec;
+            actualData[index+3]=100000;
+          }
+        }
+      }
+      
+      imageData.data=actualData;
+      ctx.putImageData(imageData,0,0);
+    }
+    function $(id)
+    {
+      return document.getElementById(id);
+    }
+    
+    function timer()
+    {
+      if(!timerRunning)
+      {
+        timerRunning=true;
+        setTimeout(timer,1);
+        for(var i=0;i<pixels.length;i++)
+        {
+          pixels[i].move();
+        }
+        
+        drawPixels();
+        wordsTxt.focus();
+        
+        n++;
+        if(n%10==0 && (cw!=document.body.clientWidth || ch!=document.body.clientHeight)) body_resize();
+        timerRunning=false;
+      }
+      else
+      {
+        setTimeout(timer,10);
+      }
+    }
+	
+	
+    resHalfFloor=Math.floor(resolution/2);
+    resHalfCeil=Math.ceil(resolution/2);
+    
+    body_resize();
+    timer();
+	}
+	function init()
+    {
+      readWords();
+      
+      var fontSize=80;
+      var wordWidth=0;
+      do
+      {
+        wordWidth=0;
+        fontSize-=4;
+        wordCtx.font=fontSize+"px 'Captureit2'";
+        for(var i=0;i<txt.length;i++)
+        {
+          var w=wordCtx.measureText(txt[i]).width;
+          if(w>wordWidth) wordWidth=w;
+        }
+      }
+	  while(wordWidth>cw-50 || fontSize*txt.length > ch-50)
+      
+      wordCtx.clearRect(0,0,cw,ch);
+      wordCtx.textAlign="center";
+      wordCtx.textBaseline="middle";
+      for(var i=0;i<txt.length;i++)
+      {
+        wordCtx.fillText(txt[i],cw/2,ch/2 - fontSize*(txt.length/2-(i+0.5)));
+      }
+      
+      var index=0;
+      
+      var imageData=wordCtx.getImageData(0,0,cw,ch);
+      for(var x=0;x<imageData.width;x+=resolution) //var i=0;i<imageData.data.length;i+=4)
+      {
+        for(var y=0;y<imageData.height;y+=resolution)
+        {
+          i=(y*imageData.width + x)*4;  
+          if(imageData.data[i+3]>128)
+          {
+            if(index >= pixels.length)
+            {
+              pixels[index]=new Pixel(x,y);
+            }
+            else
+            {
+              pixels[index].homeX=x;
+              pixels[index].homeY=y;
+            }
+            index++;
+          }
+        }
+      }
+      
+      pixels.splice(index,pixels.length-index);
+    }
+	
+	function readWords()
+    {
+      words=(wordsc);
+      txt=words.split('\n');
+    }
+	
+	
+  </script>
+  
+</div>
+<div id="bottom">
+	<table>
+		<tr>
+			<td>
+				Words:
+			</td>
+			<td>
+				<input id="word" type="text" placeholder="Any word or phrase"></input>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Red:
+			</td>
+			<td>
+				<input id="red" type="text" placeholder="a value in (0,255)"></input>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Green:
+			</td>
+			<td>
+				<input id="green" type="text" placeholder="a value in (0,255)"></input>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Blue:
+			</td>
+			<td>
+				<input id="blue" type="text" placeholder="a value in (0,255)"></input>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Resolution:
+			</td>
+			<td>
+				<input id="res" type="text" placeholder=">=1"></input>
+			</td>
+		</tr>
+		<tr>
+			<td><input type="button" value="Submit" onclick="play()"></input></td>
+		</tr>
+	</table>
+	<!-- <a id="home" href="home.html">Home</a> -->
+</div>
+</body>
+
+</html>

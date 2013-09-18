@@ -1,0 +1,50 @@
+<html>
+	<head>
+		<title>Brain Train</title>
+		<center><img src='images/heading.png'/></center><br>
+		<meta charset="UTF-8">
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script src="js/mod.js"></script>
+		<script src="js/effect.js"></script>
+		
+		<style>
+			body
+			{
+				background-color: #000;
+			}
+			a
+			{
+				display: block;
+				border: 2px #fff;
+				border-radius: 10px;
+				width: 200px;
+				height: 40px;
+				background-color: #001007;
+				color: #4d5;
+				font-size: 30px;
+				font-weight: bold;
+				text-decoration: none;
+				box-shadow: 0px 0px 5px rgba(0, 255, 0, 1);
+			}
+			a:hover
+			{
+				box-shadow: 0px 0px 25px rgba(0, 255, 0, 1);
+			}
+			
+		</style>
+	</head>
+	
+	<body>
+	<br>
+	<br>
+		<center>
+		<div style="z-index: 0;">
+			<a href='dodge/index.html'>Dodge</a><br>
+			<a href='tic/index.html'>Tic-Tac-Toe</a>
+		</div>
+		</center>
+		<div style="text-align: center; position: fixed; top: 5%; left: 10%; z-index: -1;">
+			<center><canvas id="canvasOne" width="1000%" height="1000%"></center>
+		</div>
+	</body>
+</html>
